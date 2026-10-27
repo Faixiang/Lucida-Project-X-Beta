@@ -19,8 +19,9 @@ AIGC:
 |---|---|---|---|
 | E-01 | `ee-strip-scan.py` | 扫描 EE 目录规模、非 EE 引用点、硬耦合行号、遥测点（清单数据来源） | **已入库** 2026-10-28 |
 | E-02 | `license-scan.py` | 依赖闭包许可扫描，输出 CSV 明细 | 待入库 |
-| E-03 | `verify-license-intact.ps1` | 剥离后校验根 LICENSE 与上游原文逐字一致 | 待入库 |
-| E-04 | `verify-no-telemetry.ps1` | 启动与执行期间核验无 PostHog 外联 | 待入库 |
+| E-03 | `verify-license-intact.ps1` | 剥离后校验根 LICENSE 与上游原文逐字一致 | 待入库（E-05 已覆盖静态部分） |
+| E-04 | `verify-no-telemetry.ps1` | 启动与执行期间核验无 PostHog 外联 | 待入库（E-05 仅静态扫描） |
+| E-05 | `verify-preflight.ps1` | 发布前只读闸门：LICENSE 完整性、NOTICE 存在性、EE 目录状态、构建产物污染、前端 EE import、遥测配置 | **已入库** 2026-10-28，位于源码仓库根目录 |
 
 ## E-01 用法
 
