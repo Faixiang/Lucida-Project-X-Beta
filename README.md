@@ -1,3 +1,14 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_86a91363d23511f18460525400393706
+    ReservedCode1: +mg6XeeQj0GCIS2bR7ijsaYpnCZO7oVY1ZSTZwnjUPP7v96DvNWgCnncyyMRXITIc0TgVhrjT2csdYzO4OYCOPdFKjDYg8dn5m1JQ4+VSn7ElCC7L+6NWCJbvMEGYwlk7pODp0jblZZK9apXFxZ91OlUHjSJVKRBsoFKQDNJ585My1Uf71+NJIEGAvI=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: c6eb62ba6ec5a28db2139adf23a2fe4b_86a91363d23511f18460525400393706
+    ReservedCode2: +mg6XeeQj0GCIS2bR7ijsaYpnCZO7oVY1ZSTZwnjUPP7v96DvNWgCnncyyMRXITIc0TgVhrjT2csdYzO4OYCOPdFKjDYg8dn5m1JQ4+VSn7ElCC7L+6NWCJbvMEGYwlk7pODp0jblZZK9apXFxZ91OlUHjSJVKRBsoFKQDNJ585My1Uf71+NJIEGAvI=
+---
+
 # Lucida | 明箱（Project X） Beta
 
 > 私有档案仓库。存放 **清单** 与 **工程文件**，与主项目代码仓库严格隔离——本仓库不含任何产品源码。
@@ -31,3 +42,4 @@
 | 日期 | 文件 | 说明 |
 |---|---|---|
 | 2026-10-27 | `10_清單/activepieces-EE剥离清单与保留清单.md` | Activepieces 底座 EE 剥离范围、耦合点、遥测点、保留清单与执行步骤 |
+*（内容由AI生成，仅供参考）*

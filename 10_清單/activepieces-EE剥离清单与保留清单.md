@@ -2,6 +2,17 @@
 AIGC:
     Label: "1"
     ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_8774e027d23511f196c5525400248c00
+    ReservedCode1: RSH4z50nNJJFtU0R80CXgc+0txDIpsqXTmRveeOAC/R9zJ0gzih4lTRPLu+cL5DJwK+5wHcrDU0g9u7GidPaFX8sfaKEBMg9XILn65S+EoY3SbTJ7e9sns6UODVz828aRlhBhBjbDxk2xlYCR+3XqrohpmSzM7kxXcWrD5BBT/eBi25r8cY2FnbyAyk=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: c6eb62ba6ec5a28db2139adf23a2fe4b_8774e027d23511f196c5525400248c00
+    ReservedCode2: RSH4z50nNJJFtU0R80CXgc+0txDIpsqXTmRveeOAC/R9zJ0gzih4lTRPLu+cL5DJwK+5wHcrDU0g9u7GidPaFX8sfaKEBMg9XILn65S+EoY3SbTJ7e9sns6UODVz828aRlhBhBjbDxk2xlYCR+3XqrohpmSzM7kxXcWrD5BBT/eBi25r8cY2FnbyAyk=
+---
+
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
     ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_ed5e0e59d22f11f196c5525400248c00
     ReservedCode1: 1uQ8GewB3xuCmeWfl+9L0CAsOX4rjUxjMLisnElLoMz+rmoY6AdmXjHPxuYodUE8acJFwDUZ1+puCDLQoaue0sqsXGB/HIir6dUM9x8DvjgXy6jELz2ockQbSTTbGd5d8ZvYuN5OE44E2gNOpdDTd7Vh6j49vBlTN8ujj3KhGPtNSyt/0kYuvH0M5JM=
     ContentPropagator: 001191440300708461136T1XGW3
@@ -104,19 +115,19 @@ AIGC:
 
 | 指标 | 数值 |
 |---|---:|
-| 非 EE 代码引用 EE 的总处数 | 333 |
-| 涉及文件数 | 157 |
+| 非 EE 代码引用 EE 的总处数 | 329 |
+| 涉及文件数 | 155 |
+
+> 统计口径（2026-10-28 复核，脚本 `20_工程/ee-strip-scan.py`）：模块说明符含 `/ee/` 或 `ee/` 前缀，或包名精确等于 `ee-embed-sdk`。此前 333 处 / 157 文件的旧数字含 26 处假阳性——`find-free-slots`、`json-tree-skeleton`、`employee-terminated`、`tree-kill`、`1701261357197-migrate-ee-users-to-oldest-platform` 等含 `ee-` 字样的普通文件名被旧正则误判；另补入 4 处多行 import 的 `ee-embed-sdk` 引用。
 
 按源目录分布：
 
 | 源目录 | 引用处数 |
 |---|---:|
-| `packages/server/api` | 238 |
-| `packages/server/worker` | 36 |
+| `packages/server/api` | 253 |
+| `packages/server/worker` | 38 |
 | `packages/core/shared` | 33 |
-| `packages/pieces/community` | 20 |
-| `packages/web/src` | 4 |
-| `packages/server/sandbox` | 2 |
+| `packages/web/src` | 5 |
 
 ### 2.2 四处结构性注册点（必须改）
 
@@ -149,7 +160,7 @@ AIGC:
 
 | 项 | 位置 | 说明 |
 |---|---|---|
-| 真实的 PostHog 客户端 | `packages/server/api/src/app/helper/telemetry.utils.ts` | 23 处引用；第 15 行**硬编码 project key**（`phc_7F92...`），第 16 行 host 为 `https://us.i.posthog.com`；含 `identify` / `alias` / `groupIdentify` / `capture` / `flush` |
+| 真实的 PostHog 客户端 | `packages/server/api/src/app/helper/telemetry.utils.ts` | 全文件 25 处 PostHog 相关行，其中 8 处 SDK 调用：`identify`×2、`alias`、`groupIdentify`、`capture`×2、`flush`、`shutdown`；第 15 行**硬编码 project key**（`phc_7F92...`），第 16 行 host 为 `https://us.i.posthog.com` |
 | 事件枚举 | 同文件第 200–271 行 | `LicenseKeyPostHogEvents`：AI 用量、日运行数、聊天消息、平台初始化报告 |
 | 调用者（生产代码） | 19 个文件 | 含 `app.ts`、`authentication.controller.ts`、`passwordless-auth.*`、`flow.service.ts`、`flow-run-module.ts`、`mcp-server-builder.ts`、`mcp-oauth.controller.ts`、`platform/billing-and-telemetry.ts`、`platform.service.ts`、`user-invitation.*` |
 
@@ -253,4 +264,22 @@ AIGC:
 | A-05 | 新增 NOTICE / THIRD-PARTY-NOTICES | 低 | 待确认 |
 
 > 本次仅产出清单，未改动仓库任何文件。
+
+---
+
+## 八、勘误记录
+
+2026-10-28 用 `20_工程/ee-strip-scan.py` 复跑复核，修正第二章耦合统计的计数口径：
+
+| 修订项 | 原值 | 现值 | 原因 |
+|---|---|---|---:|---|
+| 非 EE 引用 EE 总处数 | 333 | **329** | 旧正则用裸 `ee-` 子串判定，把 `find-free-slots`、`json-tree-skeleton`、`employee-terminated`、`tree-kill`、`...migrate-ee-users-to-oldest-platform` 等 **26 处普通文件误判** 为 EE 引用 |
+| 涉及文件数 | 157 | **155** | 同上 |
+| `packages/pieces/community` | 20 | **0** | 20 处全部为上述假阳性，社区 pieces 实际不依赖 EE |
+| `packages/server/sandbox` | 2 | **0** | 2 处为 `tree-kill` 误判 |
+| `packages/web/src` | 4 | **5** | 补入 1 处多行 import 的 `ee-embed-sdk`（`import { … }` 换行后 `} from 'ee-embed-sdk'`） |
+| `telemetry.utils.ts` PostHog 计数 | 23 处引用 | 25 处相关行 / 8 处 SDK 调用 | 统一口径为「含 posthog 的行」，并单列 SDK 方法调用数 |
+
+**未受影响的结论**：EE 规模 263 文件 / 34,240 行、四处结构性注册点（46 / 22 / 20 / 21）、三处业务硬耦合行号与符号、遥测「不在 EE 内、删 EE 无法消除」的判断，均经复跑确认一致。
+
 *（内容由AI生成，仅供参考）*
