@@ -81,6 +81,18 @@ Docker 许可结论：个人使用、教育、非商业开源、员工 <250 且�
 
 结项状态：六项已知问题中 4 项闭环（#1 双底座、#2 索引漂移、#3 VS BT、#6 误推风险），1 项待用户本人操作（#5 token 重签），1 项待重启窗口（#4 Docker）。
 
+### GitHub 云端冗余清理
+
+范围界定：用户明确「只处理本项目在 GitHub 上的东西」，个人仓库（moodle-mcp、moodle-course-watch、obsidian-tech-website、e-portfolio、Pixel-Pindo）不在范围内，未动。
+
+| 类型 | 对象 | 变更 | 依据 |
+|---|---|---|---|
+| 远端 | `Faixiang/lucida-ap-core` | **已删除**（Private，91.2 MB）。删前 `git push backup main` 将裸库补齐至 `f1141dac`，并校验三方 tree 一致：远端 `914e2fe5`、本地工作区、本地裸库均为 `d6569356`，内容零差异 | AP 路线已放弃，n8n 已定；该仓为本项目云端唯一冗余项；删除可由本地 `git push` 完全重建，属可逆操作 |
+| 源码 | `P:\Github\_archive\activepieces` | `origin` remote 移除；`main` tracking 由 `upstream/main` 改指 `backup/main`；现为双 remote（upstream 只读参考 / backup 本地兜底） | 云端仓删除后 origin 失效，避免后续 push 报 404 造成误判 |
+| 清单 | `10_清單/项目资产与依赖总账.md` | 第二节 AP 行标注云端仓已删；2.1 节改写为双 remote 结构并记两次变更；第三节远端仓库表移除 lucida-ap-core、个人仓库改为旁注；第四节备份表补充三方 tree 校验；第九节新增第 7 条 | 实机执行结果 |
+
+删除后 GitHub 账号下本项目仅剩 `Lucida-Project-X-Beta`（Private）。本次未删除任何个人仓库。
+
 
 ## 2026-10-27
 

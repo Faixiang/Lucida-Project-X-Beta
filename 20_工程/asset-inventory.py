@@ -24,6 +24,7 @@ asset-inventory.py —— Project X / Lucida 资产与依赖盘点器（只读�
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
@@ -31,7 +32,7 @@ from datetime import datetime
 # ---------------------------------------------------------------- 配置区
 
 REPOS = {
-    "activepieces": r"P:\Github\AI-Hub\activepieces",
+    "activepieces": r"P:\Github\_archive\activepieces",
     "n8n": r"P:\Github\AI-Hub\n8n",
     "Lucida-Project-X-Beta": r"P:\Github\Lucida-Project-X-Beta",
 }
@@ -59,12 +60,12 @@ BIG_DIRS = [
 
 # 关键存在性探针：(标签, 路径)
 PROBES = [
-    ("AP 根 LICENSE", r"P:\Github\AI-Hub\activepieces\LICENSE"),
-    ("AP NOTICE.md", r"P:\Github\AI-Hub\activepieces\NOTICE.md"),
-    ("AP 预检脚本", r"P:\Github\AI-Hub\activepieces\verify-preflight.ps1"),
-    ("AP EE 许可归档", r"P:\Github\AI-Hub\activepieces\LICENSES\Activepieces-Enterprise-License.txt"),
-    ("AP packages/ee (应已删)", r"P:\Github\AI-Hub\activepieces\packages\ee"),
-    ("AP app/ee (应已删)", r"P:\Github\AI-Hub\activepieces\app\ee"),
+    ("AP 根 LICENSE", r"P:\Github\_archive\activepieces\LICENSE"),
+    ("AP NOTICE.md", r"P:\Github\_archive\activepieces\NOTICE.md"),
+    ("AP 预检脚本", r"P:\Github\_archive\activepieces\verify-preflight.ps1"),
+    ("AP EE 许可归档", r"P:\Github\_archive\activepieces\LICENSES\Activepieces-Enterprise-License.txt"),
+    ("AP packages/ee (应已删)", r"P:\Github\_archive\activepieces\packages\ee"),
+    ("AP app/ee (应已删)", r"P:\Github\_archive\activepieces\app\ee"),
     ("n8n LICENSE.md", r"P:\Github\AI-Hub\n8n\LICENSE.md"),
     ("n8n LICENSE_EE.md", r"P:\Github\AI-Hub\n8n\LICENSE_EE.md"),
     ("n8n 合成 openapi(dist)", r"P:\Github\AI-Hub\n8n\packages\cli\dist\public-api\v1\openapi.yml"),
@@ -183,8 +184,9 @@ def collect():
     w("| 工具 | 版本/状态 |")
     w("|---|---|")
     for label, cmd in TOOLCHAIN:
-        out_txt = run(cmd).strip().splitlines()
-        val = out_txt[0].strip() if out_txt else "**不可用**"
+        raw = run(cmd).strip()
+        m = re.search(r"\d+\.\d+\.\d+", raw)
+        val = m.group(0) if m else (raw.splitlines()[0][:60] if raw else "**不可用**")
         w(f"| {label} | {val} |")
     w("")
 
