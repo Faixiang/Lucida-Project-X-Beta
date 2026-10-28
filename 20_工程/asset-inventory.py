@@ -49,7 +49,11 @@ RUNTIME = {
 
 TOOLCHAIN = [
     ("Node.js", [r"P:\Program Files\nodejs\node.exe", "-v"]),
-    ("pnpm", ["cmd", "/c", "pnpm -v"]),
+    # 不走 PATH 里的 pnpm：它会命中 Marvis Host 自带 corepack shim，
+    # 打印宿主版本号（1.60.3200）而非 pnpm 版本，属探测污染。
+    # 直接读真实 pnpm 全局包的 package.json，避免引号与 shim 干扰。
+    ("pnpm", [r"P:\Program Files\nodejs\node.exe", "-p",
+              r"require('P:/Program Files/nodejs/node_modules/pnpm/package.json').version"]),
     ("Python", [sys.executable, "--version"]),
     ("Docker", ["docker", "--version"]),
 ]
@@ -65,7 +69,9 @@ PROBES = [
     ("AP 预检脚本", r"P:\Github\_archive\activepieces\verify-preflight.ps1"),
     ("AP EE 许可归档", r"P:\Github\_archive\activepieces\LICENSES\Activepieces-Enterprise-License.txt"),
     ("AP packages/ee (应已删)", r"P:\Github\_archive\activepieces\packages\ee"),
-    ("AP app/ee (应已删)", r"P:\Github\_archive\activepieces\app\ee"),
+    ("AP server app/ee (仍在)", r"P:\Github\_archive\activepieces\packages\server\api\src\app\ee"),
+    ("AP web public-routes.tsx (应已删)", r"P:\Github\_archive\activepieces\packages\web\src\app\public-routes.tsx"),
+    ("AP core/shared/lib/ee (MIT，未剥)", r"P:\Github\_archive\activepieces\packages\core\shared\src\lib\ee"),
     ("n8n LICENSE.md", r"P:\Github\AI-Hub\n8n\LICENSE.md"),
     ("n8n LICENSE_EE.md", r"P:\Github\AI-Hub\n8n\LICENSE_EE.md"),
     ("n8n 合成 openapi(dist)", r"P:\Github\AI-Hub\n8n\packages\cli\dist\public-api\v1\openapi.yml"),

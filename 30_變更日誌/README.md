@@ -108,6 +108,20 @@ Docker 许可结论：个人使用、教育、非商业开源、员工 <250 且�
 
 清理后档案仓内已无 AP 专用文件：`10_清單/` 仅剩总账、快照日志、README；`20_工程/` 仅剩 `asset-inventory.py` 与 README。
 
+### 盘点器探针纠错与总账事实校正
+
+起因：汇报项目现状前实机复跑 `asset-inventory.py`，发现两处探针给出错误事实，若照抄即形成新的记忆漂移。
+
+| 类型 | 对象 | 变更 | 依据 |
+|---|---|---|---|
+| 工程 | `20_工程/asset-inventory.py` | AP `app/ee` 探针原指 `\<仓库根>\app\ee`（该路径从不存在），恒报「不存在」，掩盖了真实状态。改指 `packages\server\api\src\app\ee`，实测 **215 文件仍在** | 目录深度搜索：EE 残留目录共 9 处，其中 `server/api/src/app/ee` 为最大项 |
+| 工程 | 同上 | pnpm 探针原为 `cmd /c pnpm -v`，实际命中 Marvis Host 自带 corepack shim，输出宿主版本 `1.60.3200`（另一路径甚至返回 `0.29.4`）。改为直读 `P:\Program Files\nodejs\node_modules\pnpm\package.json`，实测 **12.15.0** | `Get-Command pnpm -All` 显示 PATH 首位为 `MarvisHost\1.60.3200.39\binaries\node\current\pnpm.ps1` |
+| 工程 | 同上 | 新增两条探针：web `public-routes.tsx`（应已删）、`core/shared/lib/ee`（MIT，未剥，44 文件）；原 web `routes/embed` 探针改为探测 `public-routes.tsx`，避免空目录恒报「存在」 | 实测 `routes/embed` 为空目录且 `public-routes.tsx` 已不存在 |
+| 清单 | `10_清單/项目资产与依赖总账.md` | 第二节 AP 行由「已剥 EE」改为「**部分剥离**」：已删 `packages/ee` 与 web embed 入口，`server/api/src/app/ee` 215 文件仍在归档内；第五节 AP EE 行同步写实规模；档案仓 HEAD `b16a7cf`→`89d7791` | 实机核实 |
+| 清单 | 同上 | 第五节 n8n 行由「全量在盘并运行中」改为「在盘、服务当前未启动（5678 未监听）」；第七节 pnpm 行补探针口径与 shim 干扰说明；第九节新增第 8 条 | 端口探测 5678 → False |
+
+结论修正一处：此前表述「AP 已剥 EE」不准确，实际是**部分剥离**。该状态不影响合规判定——EE 代码仅存于本地归档，未对外分发、未构建发布；若日后要发布 AP 产物，须先完成 `server/api/src/app/ee` 剥离（原 E-01 清单数据可从 git 历史 `af91a38` 取回）。
+
 
 ## 2026-10-27
 
