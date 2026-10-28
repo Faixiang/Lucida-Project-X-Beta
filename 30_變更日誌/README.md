@@ -53,6 +53,22 @@ AIGC:
 
 本日改动涉及产品源码工作区（两个本地提交），均未推送上游，仅落在本地裸库与物理副本。
 
+### 资产盘点基线建立
+
+| 类型 | 对象 | 变更 | 依据 |
+|---|---|---|---|
+| 清单 | `10_清單/项目资产与依赖总账.md` | 新建：项目全部资产、远端仓库、备份、第三方许可、运行数据、工具链、工程件、已知问题八项的单一事实来源 | 跨会话记忆漂移问题，用户要求建立清单基线 |
+| 清单 | `10_清單/资产快照日志.md` | 新建：每日快照流水，由 E-06 自动追加，不手工编辑历史段 | 用户要求每日写入项目清单 |
+| 工程 | `20_工程/asset-inventory.py` | E-06 入库：只读资产盘点器，输出 Markdown 片段，`--append` 追加到快照日志；不做深递归 walk | 同上 |
+| 工程 | `20_工程/README.md`、`10_清單/README.md` | 索引同步新增条目 | 同上 |
+| 配置 | `activepieces` remote | `origin`→`upstream`（官方）、`github`→`origin`（私有 `lucida-ap-core`），`backup` 不变；`main` tracking 自动指向 `upstream/main` | 消除三 remote 并存导致的误推风险 |
+| 源码 | `n8n` 工作区 | 209 个「未提交变更」经核实为 `core.autocrlf=true` 引起的索引 stat 漂移，`git diff` 全空、porcelain v2 显示 HEAD blob 与 index blob hash 完全一致；执行 `git add -u` 重新归一化后归零，无 staged 变更、无内容改动 | 消除脏工作区对后续 pull 的干扰 |
+
+实机扫描更正一处口径错误：n8n 合成产物 `openapi.yml` 实际位于 `packages/cli/dist/public-api/v1/`（1,023,814 B），非先前期次记录的仓库根 `dist/`；源文件 `src/public-api/v1/openapi.yml` 为 4,185 B。E-06 探针已按真实路径修正。
+
+未执行项（需授权）：VS Build Tools 3.35 GB 卸载、Docker 安装、activepieces 目录归档移出、GitHub token 重签。
+
+
 ## 2026-10-27
 
 | 类型 | 对象 | 变更 | 依据 |
