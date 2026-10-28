@@ -68,6 +68,19 @@ AIGC:
 
 未执行项（需授权）：VS Build Tools 3.35 GB 卸载、Docker 安装、activepieces 目录归档移出、GitHub token 重签。
 
+### 三项待决项执行（用户授权）
+
+| 类型 | 对象 | 变更 | 依据 |
+|---|---|---|---|
+| 资产 | `P:\Github\_archive\activepieces` | AP 源码仓由 `P:\Github\AI-Hub\activepieces` 同盘 rename 归档至 `P:\Github\_archive\activepieces`（2.18 GB）。移动后 git 完整可用：HEAD `f1141dac`、三 remote（origin=私有 / upstream=官方 / backup=本地）正常、未提交 0 | 用户授权执行；路线已放弃，工作区收敛为 n8n 单底座 |
+| 工具链 | VS Build Tools 2022 | `setup.exe uninstall --installPath "P:\VSBuildTools" --quiet --norestart` 卸载完成；验证注册表卸载项消失、`P:\VSBuildTools` 目录消失、无残留 installer 进程；回收 3.35 GB | 装机后全程未调用；isolated-vm 用预编译二进制，n8n 以 pnpm 源码 + dist 产物运行，不依赖 node-gyp 现场编译 |
+| 工具链 | Docker | **未安装**。查明真实阻断点为 WSL2：`VirtualMachinePlatform` 与 `Microsoft-Windows-Subsystem-Linux` 均 Disabled，启用必须重启系统，未擅自执行 | 重启属高影响操作，留待用户指定时点；n8n 2.46 源码渠道已可运行，非当前阻塞 |
+| 清单 | `10_清單/项目资产与依赖总账.md` | 同步更新第二节 AP 路径、第七节工具链（VS BT 已卸载 / WSL2 未启用 / Docker 受阻 / Docker Desktop 免费适用范围）、第九节问题 1/3/4 状态 | 实机执行结果 |
+
+Docker 许可结论：个人使用、教育、非商业开源、员工 <250 且年收入 <1000 万美元的企业免费。本项目为个人自用，许可零成本，仅需首次运行接受协议。
+
+结项状态：六项已知问题中 4 项闭环（#1 双底座、#2 索引漂移、#3 VS BT、#6 误推风险），1 项待用户本人操作（#5 token 重签），1 项待重启窗口（#4 Docker）。
+
 
 ## 2026-10-27
 
