@@ -1,47 +1,153 @@
+<!-- TODO: 補封面圖（建議 1280×640，深淺兩版，參照 <picture> 深色模式寫法） -->
+
+<h4 align="center">
+  <a href="#这是什么">这是什么</a> |
+  <a href="#画布形态">画布形态</a> |
+  <a href="#架构">架构</a> |
+  <a href="#当前状态">当前状态</a> |
+  <a href="#仓库说明">仓库说明</a>
+</h4>
+
+<div align="center">
+  <h2>
+    本地自用的思维维度图。<br/>
+    你画出已知的部分，AI 补全你尚未意识到的盲区。<br/>
+  <br />
+  </h2>
+</div>
+
+<br />
+<p align="center">
+  <a href="https://github.com/Faixiang/Lucida-Project-X-Beta/blob/main/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
+  <a href="https://github.com/Faixiang/Lucida-Project-X-Beta">
+    <img alt="Status: early development" src="https://img.shields.io/badge/status-early%20development-orange.svg" /></a>
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Faixiang/Lucida-Project-X-Beta" />
+  <img alt="GitHub repo stars" src="https://img.shields.io/github/stars/Faixiang/Lucida-Project-X-Beta?style=flat" />
+</p>
+
+<!-- TODO: 補产品截图 + 图注 -->
+
+**Lucida**（中文名「明箱」）取自 Camera Lucida，十九世纪画家借以描摹实景的辅助器具；它的反面是 Camera Obscura（暗箱）。这个项目想做的是明箱那一面：把思考投射到看得见的平面上，而不是留在看不见的地方。
+
+**Project X** 是本项目对内使用的工作代号。
+
 ---
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_86a91363d23511f18460525400393706
-    ReservedCode1: +mg6XeeQj0GCIS2bR7ijsaYpnCZO7oVY1ZSTZwnjUPP7v96DvNWgCnncyyMRXITIc0TgVhrjT2csdYzO4OYCOPdFKjDYg8dn5m1JQ4+VSn7ElCC7L+6NWCJbvMEGYwlk7pODp0jblZZK9apXFxZ91OlUHjSJVKRBsoFKQDNJ585My1Uf71+NJIEGAvI=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: c6eb62ba6ec5a28db2139adf23a2fe4b_86a91363d23511f18460525400393706
-    ReservedCode2: +mg6XeeQj0GCIS2bR7ijsaYpnCZO7oVY1ZSTZwnjUPP7v96DvNWgCnncyyMRXITIc0TgVhrjT2csdYzO4OYCOPdFKjDYg8dn5m1JQ4+VSn7ElCC7L+6NWCJbvMEGYwlk7pODp0jblZZK9apXFxZ91OlUHjSJVKRBsoFKQDNJ585My1Uf71+NJIEGAvI=
----
 
-# Lucida | 明箱（Project X） Beta
+## 这是什么
 
-> 私有档案仓库。存放 **清单** 与 **工程文件**，与主项目代码仓库严格隔离——本仓库不含任何产品源码。
+一个**本地自用**的思维维度图工具。每个 project 对应一张图。
 
-| 项 | 内容 |
-|---|---|
-| 仓库全称 | Lucida \| 明箱（Project X）Beta |
-| GitHub slug | `Lucida-Project-X-Beta`（`\|`、括号、空格不被 GitHub 接受，已自动规范化） |
-| 可见性 | Private |
-| 归属 | Faixiang |
-| 定位 | Project X（对内代号）／Lucida·明箱（对外品牌名）Beta 阶段的过程档案 |
+与传统思维导图不同，它的核心不是「AI 帮你生成一张图」，而是**协作式补全**：
 
-## 目录结构
+- 你只画自己已经知道的部分
+- AI 负责补上你还不知道自己需要知道的部分——前置条件、必要步骤、容易忽略的环节
+
+每个人都有自己的知识盲区，尤其是「不知道自己不知道」的那一类。Lucida 把这类盲区当作首要处理对象。
+
+## 画布形态
+
+一块方格画网，接近 Apple Notes 的智能形状而非自由手绘：
+
+- 用户在网格上创建不同尺寸的**方块**（如 5×5、4×4 格），构成节点
+- 方块边角可转为**触点**，用作联接锚点
+- 触点之间**有向**相连，方向由用户决定，线上可带文字标签
+- 可划**分区**（zones）为不同区域铺底色
+
+本质上是一张**网格式有向图**：方块是节点容器，触点是联接点，连边是有向边。
+
+## 架构
+
+### 壳 + 运行时获取
+
+- **壳**（本项目自研）：前端画布、交互、数据契约、导入导出
+- **运行时**：可执行能力将来由用户自行从官方源获取的 [n8n](https://n8n.io) 承担
+
+壳内**不包含** n8n 的代码与产物，只做引导：展示官方下载地址，由用户在自己的机器与网络上完成获取。原因有二——许可上的清晰，以及发布物本身的干净。
+
+> n8n 受其 Sustainable Use License 约束。本项目为免费非商业性质，壳与运行时保持解耦，不涉及白标收费或托管收费。
+
+### AI 接入：描述档模式
+
+Lucida 本身**不内置任何 AI 服务，也不保存 API Key**。AI 协作通过**描述档**完成：
+
+1. 项目定义一份标准描述档格式（JSON，含 `project` / `zones` / `blocks` / `connections`）
+2. 把配套的提示词模板交给任意 AI——云端模型、本地 Ollama 皆可
+3. AI 按模板生成描述档，用户将其贴入或导入 Lucida
+4. Lucida 在前端解析并渲染为方块与连线
+
+由此得到：不需要后端、不需要密钥托管、三端行为一致，隐私始终留在用户手里。
+
+### 三端形态
+
+一套 Web 代码为基础，外围套壳：
+
+| 端 | 形态 | 状态 |
+|---|---|---|
+| Web | 本体 | 主线 |
+| Android | Capacitor 套壳 | 暂缓 |
+| PC | Tauri / Electron 套壳 | 暂缓 |
+
+当前集中力量深化 Web 本体。
+
+## 当前状态
+
+**早期开发中。** 引擎实作尚未开始。
+
+| 阶段 | 内容 | 状态 |
+|---|---|---|
+| 产品定档 | 定位、形态、分发性质（免费开源、非商业） | 已定 |
+| 描述档规格 | v0.1 结构草案 | 已起草，待实作验证后锁版 |
+| 治理基线 | 工作协议、硬约束、决策正本、旧资产索引 | 已建立 |
+| 能力抽取 | 从上一代原型中抽取可复用能力 | 首轮完成 |
+| 画布引擎 | 网格、方块、触点、有向连线 | **未开始** |
+
+策划分工与执行分工分离，可视觉交付一律以用户实机验收为准。
+
+## 仓库说明
+
+本仓库是**档案仓库**，只收过程档案，**不含产品源码**。
 
 ```
 .
-├─ 10_清單/      审计、许可、依赖、剥离等各类清单与判定报告
-├─ 20_工程/      工程脚本、配置、验证工具（不含产品源码）
+├─ 10_清單/      审计、许可、依赖、剥离等清单与判定报告
+├─ 20_工程/      工程脚本、配置、验证工具
 └─ 30_變更日誌/  按日期记录的变更日志（仅记有改动之日）
 ```
 
-## 边界约定
+### 边界约定
 
-1. 本仓库**只收档案**：清单、报告、脚本、配置、日志；不收 Activepieces 源码、不收 Project X 产品代码。
-2. 与主项目代码仓库互不嵌套、互不引用，避免档案与工程混在一起。
-3. 涉及第三方许可的原始声明文本（如上游 LICENSE）在此仅作**引用与结论记录**，不改写原文。
-4. 含本机路径、内部代号的文档仅限私有仓库，不对外分发。
+1. 只收档案：清单、报告、脚本、配置、日志；不收产品源码
+2. 与主项目代码仓库互不嵌套、互不引用
+3. 涉及第三方许可的声明文本仅作引用与结论记录，不改写原文
+4. 结论一旦被后续清单修订，旧文件保留不改，新增文件并登记取代关系
 
-## 当前收录
+### 从这里开始读
 
-| 日期 | 文件 | 说明 |
-|---|---|---|
-| 2026-10-28 | `10_清單/项目资产与依赖总账.md` | **基线总账**：资产、远端、备份、许可、运行数据、工具链与已知问题的唯一事实来源 |
-| 2026-10-28 | `10_清單/资产快照日志.md` | 每日自动快照流水（由 `20_工程/asset-inventory.py --append` 生成） |
-| 2026-10-28 | `20_工程/asset-inventory.py` | E-06 只读资产与依赖盘点器 |
-*（内容由AI生成，仅供参考）*
+| 想了解 | 读 |
+|---|---|
+| 项目全部资产、依赖、许可、运行环境的**唯一事实来源** | [`10_清單/项目资产与依赖总账.md`](./10_清單/项目资产与依赖总账.md) |
+| 每日资产快照流水 | [`10_清單/资产快照日志.md`](./10_清單/资产快照日志.md) |
+| 工程脚本清单与收录规则 | [`20_工程/README.md`](./20_工程/README.md) |
+| 项目变更历史 | [`30_變更日誌/README.md`](./30_變更日誌/README.md) |
+
+### 记录纪律
+
+- 任何涉及数量、版本、许可的表述，先跑脚本，再引用输出，不凭记忆
+- 改动先落本地提交，确认后才推送远端
+
+## 许可
+
+以 [MIT License](./LICENSE) 授权。
+
+本项目对外性质为**免费开源、非商业**：不做商业分发、不做白标收费、不做托管收费。
+
+仓库内涉及第三方组件的许可声明均为引用与结论记录，原始条款以其上游发布为准。壳与运行时解耦，本仓库不含任何 n8n 代码或产物。
+
+## 参与
+
+项目处于早期阶段，接口与规格仍在变动。若你发现问题或想提出建议，欢迎开 issue 讨论。
+
+---
+
+*Lucida / 明箱 · Project X*

@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_88a4bfb1d23511f18460525400393706
-    ReservedCode1: UfXaj46Q8x1MjC3onP685c6JycOtJLpy5wA8yD9SZiLSqvTrZo7f47C75PPlfKFm3zqMe3PHr3z2ZNY/8FRQROGnZVDI4J93dCYsMS3RuwKTAattCc5gaNPDgMQK2ACw9i+/1z5XnUoVoOKg8fnlHzPEIWKU/GRELAdKQP974PU7EPVwMVrZohUSJGQ=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: c6eb62ba6ec5a28db2139adf23a2fe4b_88a4bfb1d23511f18460525400393706
-    ReservedCode2: UfXaj46Q8x1MjC3onP685c6JycOtJLpy5wA8yD9SZiLSqvTrZo7f47C75PPlfKFm3zqMe3PHr3z2ZNY/8FRQROGnZVDI4J93dCYsMS3RuwKTAattCc5gaNPDgMQK2ACw9i+/1z5XnUoVoOKg8fnlHzPEIWKU/GRELAdKQP974PU7EPVwMVrZohUSJGQ=
----
-
 # 20_工程
 
 工程侧的脚本、配置与验证工具。**不含产品源码**，源码仍留在各自代码仓库。
@@ -29,4 +18,3 @@ AIGC:
 - 脚本必须可重复执行、只读优先；涉及删除的操作单独标注并需显式授权。
 - 每个脚本头部注明：用途、输入、输出、是否有副作用。
 - 不在本仓库存放任何密钥、token、账号凭据。
-*（内容由AI生成，仅供参考）*

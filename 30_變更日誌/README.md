@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: c6eb62ba6ec5a28db2139adf23a2fe4b_892ed3bad23511f196c5525400248c00
-    ReservedCode1: 2cxXr8nnlLeBALtXAys9IYWBj1hGcvo86ZaW4xIklST9lYBjmUAfLv5SI+sA0rdceYPgFnm6PzmR9aZ2oPdGSvsO0szQ2ewMJeL7z3qb2ehQpnf+KAtT5nRcpe8r+S4e3hE8vNd8xPIbQT6rx/Gba0EDScg6SsS5jOSiMpz33et6pAvhSOfgPmv7IK0=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: c6eb62ba6ec5a28db2139adf23a2fe4b_892ed3bad23511f196c5525400248c00
-    ReservedCode2: 2cxXr8nnlLeBALtXAys9IYWBj1hGcvo86ZaW4xIklST9lYBjmUAfLv5SI+sA0rdceYPgFnm6PzmR9aZ2oPdGSvsO0szQ2ewMJeL7z3qb2ehQpnf+KAtT5nRcpe8r+S4e3hE8vNd8xPIbQT6rx/Gba0EDScg6SsS5jOSiMpz33et6pAvhSOfgPmv7IK0=
----
-
 # 30_變更日誌
 
 按日期记录本仓库及其对应项目的变更。**仅记录有实际改动之日**，无改动不写。
@@ -143,4 +132,3 @@ Docker 许可结论：个人使用、教育、非商业开源、员工 <250 且�
 | 仓库 | `Lucida-Project-X-Beta` | 建立私有档案仓库，隔离清单与工程文件 | 用户指示 |
 | 清单 | `10_清單/activepieces-EE剥离清单与保留清单.md` | 首次入库：EE 剥离范围、耦合点、遥测点、保留与验收方案 | 只读扫描结果 |
 | 工程 | `20_工程/` | 建立目录与收录规则，脚本待入库 | 用户指示 |
-*（内容由AI生成，仅供参考）*
